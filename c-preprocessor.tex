@@ -1,0 +1,259 @@
+% vim: set tw=78 aw:
+\documentclass{beamer}
+
+\usepackage[utf8x]{inputenc}		% diacritice
+\usepackage[romanian]{babel}
+\usepackage{color}			% highlight
+\usepackage{alltt}			% highlight
+\usepackage{code/highlight}		% highlight
+\usepackage{hyperref}			% folosiți \url{http://...}
+					% sau \href{http://...}{Nume Link}
+\mode<presentation>
+{ \usetheme{Berlin} }			% TODO: settle this
+
+% Încărcăm simbolurilor Unicode românești în titlu și primele pagini
+\PreloadUnicodePage{200}
+
+\title[Preprocesorul C]{Preprocesorul C}
+\subtitle{Tech Talks}
+\institute{ROSEdu}
+\author[Răzvan]{Răzvan Deaconescu \\ \texttt{razvan@rosedu.org}}
+\date{10 septembrie 2009}
+
+\begin{document}
+
+% Slide-urile cu mai multe părți sunt marcate cu textul (cont.)
+\setbeamertemplate{frametitle continuation}[from second]
+
+% Arătăm numărul frame-ului
+\setbeamertemplate{footline}[frame number]
+
+\frame{\titlepage}
+
+\frame{\tableofcontents}
+
+% NB: Secțiunile nu sunt marcate vizual, ci doar apar în cuprins
+\section{No\textcommabelow{t}iuni generale}
+
+% Pentru reamintirea periodică a cuprinsului și unde ne aflăm:
+\frame{\tableofcontents[currentsection]}
+
+% Titlul unui frame se specifică fie în acolade, imediat după \begin{frame},
+% fie folosind \frametitle
+\begin{frame}{Rolul preprocesorului C}
+  \begin{itemize}		% Just like normal LaTeX
+    \item Includerea fișierelor header
+    \item Expandarea macro-urilor
+    \item Compilare condiționată
+    \item Diagnosticare
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks] % Spargem paginile mai mari automat
+  % Atenție: allowframebreaks nu funcționează cu overlay-uri
+  \frametitle{Invocarea preprocesorului}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemple de utilizare}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\section{Macrodefiniții}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Directivele \#define și \#undef}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Macro-uri simple (object-like macros)}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Folosirea parantezelor}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Macro-uri vs. const}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Macro-uri vs. enum}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Macro-uri predefinite}
+  \begin{itemize}
+    \item bla
+    \item gcc -dM -E
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Definirea de macro-uri în linia de comandă}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Macro-uri cu parametri (function-like macros)}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Macro-uri vs. funcții inline}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Macro-uri cu număr variabil de argumente (variadic macros)}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Efecte laterale}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\section{Preprocesare condiționată}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Directive de preprocesare condiționată}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Asigurarea portabilității}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{"Eliminarea" codului}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Activare/dezactivare mod debug}
+  \begin{itemize}
+    \item bla (mai mult text aici)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Combinare cod C și cod C++}
+  \begin{itemize}
+    \item bla (mai mult text aici)
+  \end{itemize}
+\end{frame}
+
+\section{Includerea fișierelor header}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Directiva \#include}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemplu de structură de fișier header}
+  \begin{itemize}
+    \item macro-uri de gardă/control
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ce conține un fișier header?}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{De ce nu se include un fișier C?}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\#include "file.h" vs. \#include $<$file.h$>$}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Extinderea căii de căutare a fișierelor header}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\section{Altele}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Stringification}
+  \begin{itemize}
+    \item bla
+    \item valoarea unei variabile DBG(a)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Concatenare}
+  \begin{itemize}
+    \item bla
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Diagnosticare}
+  \begin{itemize}
+    \item bla (\#error)
+    \item bla (\#warning)
+  \end{itemize}
+\end{frame}
+
+\section{Resurse utile}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Link-uri}
+  \begin{itemize}
+    \item \url{http://en.wikipedia.org/wiki/C\_preprocessor}
+    \item \url{http://c-faq.com/cpp/index.html}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Altele}
+  \begin{itemize}
+    \item man cpp
+    \item info cpp
+    \item comp.lang.c (Usenet)
+    \item \#\#c (IRC, Freenode)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Întrebări}
+\end{frame}
+
+\end{document}
