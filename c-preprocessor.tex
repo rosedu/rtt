@@ -1,4 +1,4 @@
-% vim: set tw=78 aw:
+% vim: set tw=78 tabstop=4 shiftwidth=4 aw:
 \documentclass{beamer}
 
 \usepackage[utf8x]{inputenc}		% diacritice
@@ -18,7 +18,7 @@
 \subtitle{Tech Talks}
 \institute{ROSEdu}
 \author[Răzvan]{Răzvan Deaconescu \\ \texttt{razvan@rosedu.org}}
-\date{10 septembrie 2009}
+\date{10 octombrie 2009}
 
 \begin{document}
 
@@ -41,26 +41,42 @@
 % Titlul unui frame se specifică fie în acolade, imediat după \begin{frame},
 % fie folosind \frametitle
 \begin{frame}{Rolul preprocesorului C}
-  \begin{itemize}		% Just like normal LaTeX
-    \item Includerea fișierelor header
-    \item Expandarea macro-urilor
-    \item Compilare condiționată
-    \item Diagnosticare
-  \end{itemize}
+	\begin{itemize}		% Just like normal LaTeX
+		\item Includerea fișierelor header
+		\item Expandarea macro-urilor
+		\item Compilare condiționată
+		\item Diagnosticare
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks] % Spargem paginile mai mari automat
-  % Atenție: allowframebreaks nu funcționează cu overlay-uri
-  \frametitle{Invocarea preprocesorului}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	% Atenție: allowframebreaks nu funcționează cu overlay-uri
+	\frametitle{Invocarea preprocesorului}
+	\begin{itemize}
+		\item Intern de compilator
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+				\large{\texttt{gcc -Wall file.c}}
+			\end{beamerboxesrounded}
+		\item Intern de compilator doar pentru faza preprocesării
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+				\large{\texttt{gcc -Wall -E file.c -o file.i}}
+			\end{beamerboxesrounded}
+		\item Cu ajutorul comenzii \texttt{cpp}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+				\large{\texttt{cpp file.c file.i}}
+			\end{beamerboxesrounded}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{Exemple de utilizare}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+\begin{frame}{Exemplu de utilizare}
+	\begin{columns}
+		\begin{column}[l]{0.5\textwidth}
+			\input{code/sample}
+		\end{column}
+		\begin{column}[l]{0.4\textwidth}
+			\input{code/sample-preproc}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \section{Macrodefiniții}
@@ -68,70 +84,235 @@
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}{Directivele \#define și \#undef}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item \textbf{Directivele de preprocesare încep cu \textbf{\#}}
+		\item Definirea și anularea definirii
+		\item \texttt{\#define MY\_VAR  50}
+		\item \texttt{\#undef MY\_VAR}
+		\item \texttt{a = a + MY\_VAR} $\rightarrow$ \texttt{a = a + 50}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri simple (object-like macros)}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item \texttt{\#define NUME	VALOARE}
+		\item \texttt{NUME} respectă regulie de nume pentru o variabilă
+		\item \texttt{VALOARE} poate să conțină aproape orice
+		\item Se înlocuiește \texttt{NUME} cu \texttt{VALOARE} peste tot
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Stupid example}
+	\begin{columns}
+		\begin{column}[l]{0.4\textwidth}
+			\input{code/stupid-example}
+		\end{column}
+		\begin{column}[l]{0.4\textwidth}
+			\input{code/stupid-example-preproc}
+		\end{column}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Folosirea parantezelor}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item O greșeală frecventă
+		\item Once upon a time during a PSO lab (2006-2007)
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+				\texttt{\#define NR\_syscalls     MY\_SYSCALL\_NO+1 \\
+			... \\
+				new\_syscall\_table = \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}malloc(NR\_syscalls * sizeof(void *));
+		}
+			\end{beamerboxesrounded}
+		\item \textbf{Nu} faceți așa
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+				\texttt{\#define MAX(a, b)   (a > b ? a : b)}
+			\end{beamerboxesrounded}
+		\item Faceți așa
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+				\texttt{\#define MAX(a, b)   ((a) > (b) ? (a) : (b)}
+			\end{beamerboxesrounded}
+		\item E OK tot timpul?
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri vs. const}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item Avantaje macro-uri
+			\begin{itemize}
+				\item mai rapide (faza de preprocesare)
+				\item interpretate la preprocesare
+				\item nu ocupă spațiu în memorie
+			\end{itemize}
+		\item Avantaje const
+			\begin{itemize}
+				\item type safety
+				\item sunt, de fapt, variabile (au o adresă)
+				\item în C++ se pot folosi la preprocesare
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri vs. enum}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item Avantaje macro-uri
+			\begin{itemize}
+				\item flexibile (nu sunt limitate la valori întregi)
+				\item nu impun constrângeri de spațiu ocupat
+			\end{itemize}
+		\item Avantaje enum
+			\begin{itemize}
+				\item type safety
+				\item block scope
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri predefinite}
-  \begin{itemize}
-    \item bla
-    \item gcc -dM -E
-  \end{itemize}
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\$ gcc -dM -E sample.c \\
+\#define \_\_CHAR\_BIT\_\_ 8 \\
+\#define \_\_unix\_\_ 1 \\
+\#define \_\_x86\_64 1 \\
+\#define \_\_SHRT\_MAX\_\_ 32767 \\
+\#define \_\_linux 1 \\
+\#define \_\_gnu\_linux\_\_ 1 \\
+\#define SAMPLE\_H\_ 1 \\
+\#define TEST\_NUM 25 \\
+\#define MAX(a,b) ((a) > (b) ? (a) : (b)) \\
+\#define \_\_STDC\_\_ 1
+		}
+	\end{beamerboxesrounded}
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\$ gcc -dM -E sample.c | wc -l \\
+131
+}
+	\end{beamerboxesrounded}
 \end{frame}
 
 \begin{frame}{Definirea de macro-uri în linia de comandă}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+		 \texttt{\$ gcc -DMY\_MACRO=40 -Wall comm.c \\
+\$ ./a.out \\
+MY\_MACRO = 40
+		}
+	\end{beamerboxesrounded}
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+		\texttt{\$ gcc -dM -E code/sample.c | grep \_\_linux\_\_ \\
+\#define \_\_linux\_\_ 1 \\
+\$ gcc -U\_\_linux\_\_ -dM -E code/sample.c | grep \_\_linux\_\_ \\
+\$
+		}
+	\end{beamerboxesrounded}
 \end{frame}
 
 \begin{frame}{Macro-uri cu parametri (function-like macros)}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#define echo()  printf("Hello, World!\textbackslash{}n");}
+			\end{beamerboxesrounded}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#define max(a, b)   ((a) \textgreater{} (b) ? (a) : (b))}
+			\end{beamerboxesrounded}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#define do\_error(msg) \textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}perror(msg);	\textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}exit(EXIT\_FAILURE);
+	}
+			\end{beamerboxesrounded}
+	\begin{itemize}
+		\item E ceva greșit?
+	\end{itemize}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{if (error\_condition) do\_error();}
+			\end{beamerboxesrounded}
+\end{frame}
+
+\begin{frame}{Macro-uri cu parametri (cont.)}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#define do\_error(msg) \{ \textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}perror(msg);	\textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}exit(EXIT\_FAILURE); \textbackslash{} \\
+\}
+	}
+			\end{beamerboxesrounded}
+	\begin{itemize}
+		\item Inconsistență - nu e nevoie de ; (punct și virgulă) la apel
+	\end{itemize}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#define do\_error(msg) do \{ \textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}perror(msg);	\textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}exit(EXIT\_FAILURE); \textbackslash{} \\
+\} while (0)
+	}
+			\end{beamerboxesrounded}
+	\begin{itemize}
+		\item Perfect!
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri vs. funcții inline}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item Avantaje funcții inline
+			\begin{itemize}
+				\item type safety
+				\item fără bătăi de cap
+			\end{itemize}
+		\item Avantaje macro-uri
+			\begin{itemize}
+				\item sunt portabile
+				\item unele lucruri se realizează mai greu cu funcții inline
+	(argumente transmise prin adresă)
+				\item unele lucruri nu se pot face cu funcții inline
+			\end{itemize}
+	\end{itemize}
+
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+		\texttt{\#define container\_of(ptr, type, member) \textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ }\hlstd{}(type *)( (char *)ptr -
+offsetof(type,member))
+		}
+	\end{beamerboxesrounded}
+
 \end{frame}
 
 \begin{frame}{Macro-uri cu număr variabil de argumente (variadic macros)}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item Similar funcțiilor cu număr variabil de argumente
+		\item În standardul C99
+	\end{itemize}
+
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#define DEBUG(fmt, ...) \textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}fprintf(stderr, fmt, \_\_VA\_ARGS\_\_);}
+	\end{beamerboxesrounded}
+
+	\begin{itemize}
+		\item O problemă: apel \texttt{DEBUG("problema");}
+		\item Soluție: token paste operator (\textbf{\#\#}) (extensie GNU)
+	\end{itemize}
+
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#define DEBUG(fmt, ...) \textbackslash{} \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}fprintf(stderr, fmt, \#\#\_\_VA\_ARGS\_\_);}
+	\end{beamerboxesrounded}
 \end{frame}
 
-\begin{frame}{Efecte laterale}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+\begin{frame}{Probleme în folosirea macro-urilor}
+	\begin{itemize}
+		\item Precedența operatorilor
+			\begin{itemize}
+				\item soluție: folosirea parantezelor
+			\end{itemize}
+		\item Omiterea operatorului ; (punct și virgulă)
+			\begin{itemize}
+				\item soluție: folosirea \texttt{do \{ ... \} while(0)}
+			\end{itemize}
+		\item Linii multiple
+			\begin{itemize}
+				\item soluție: folosirea operatorului \textbackslash{}
+(backslash)
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \section{Preprocesare condiționată}
@@ -139,33 +320,56 @@
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}{Directive de preprocesare condiționată}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item \texttt{\#if expresie\_conditionala}
+		\item \texttt{\#if defined macro} / \texttt{\#ifdef macro}
+		\item \texttt{\#endif}
+		\item \texttt{\#else}
+		\item \texttt{\#elif}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Asigurarea portabilității}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\input{code/win-lin}
 \end{frame}
 
-\begin{frame}{"Eliminarea" codului}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+\begin{frame}{``Eliminarea'' codului}
+	\begin{itemize}
+		\item Util pentru ``comentarii''
+		\item Trebuie să conțină cod ``preprocesabil''
+	\end{itemize}
+
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+\texttt{\#if 0 \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}aaaa \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}/*  \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}... \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}*/ \\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}if ...\\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}for ...\\
+\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}... \\
+\#endif
+}
+	\end{beamerboxesrounded}
+
 \end{frame}
 
 \begin{frame}{Activare/dezactivare mod debug}
-  \begin{itemize}
-    \item bla (mai mult text aici)
-  \end{itemize}
+	\input{code/true-debug}
+	\begin{itemize}
+		\item Se poate defini un macro în același fișier header
+		\item Se poate folosi linia de comandă \texttt{gcc -DDEBUG\_\_ ...}
+		\item Avansat, se pot stabili niveluri de jurnalizare
+(\texttt{DEBUG\_LEVEL} + \texttt{Dprintf\_info}, \texttt{Dprintf\_warn} etc.)
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Combinare cod C și cod C++}
-  \begin{itemize}
-    \item bla (mai mult text aici)
-  \end{itemize}
+	\begin{itemize}
+		\item Compilatorul de C++ face ``name mangling''
+		\item Linker-ul nu recunoaște simbolurile
+	\end{itemize}
+	\input{code/c-cpp}
 \end{frame}
 
 \section{Includerea fișierelor header}
@@ -173,40 +377,89 @@
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-  \frametitle{Directiva \#include}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\frametitle{Directiva \#include}
+	\begin{itemize}
+		\item Permite inserarea unui fișier header
+		\item Se copiază conținutul acelui fișier
+		\item Poate fi (și de obicei este) folosită pe mai multe niveluri (un
+fișier header include alte fișiere header)
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Exemplu de structură de fișier header}
-  \begin{itemize}
-    \item macro-uri de gardă/control
-  \end{itemize}
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+		\texttt{\#ifndef MY\_HEADER\_H\_ \\
+\#define MY\_HEADER\_H\_	1 \\
+... \\
+\#endif \\
+}
+	\end{beamerboxesrounded}
+	\begin{itemize}
+		\item Macro-uri de gardă/control
+		\item Previn includerea de mai multe ori a aceluiași fișier
+		\item Denumite, în general \texttt{\_MY\_HEADER\_H},
+\texttt{\_\_MY\_HEADER\_H} (rezervate pentru biblioteca standard),
+\texttt{MY\_HEADER\_H\_}, \texttt{MY\_HEADER\_H\_\_}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Ce conține un fișier header?}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item Macro de gardă (\texttt{\#ifndef ...})
+		\item Includerea altor fișiere header
+			\begin{itemize}
+				\item se folosesc tipuri definite în alt header
+				\item se folosesc funcții (vezi \texttt{Dprintf})
+			\end{itemize}
+		\item Macro-uri
+		\item Structuri de date și enumerări
+		\item Declarații \textbf{externe} de variabile
+		\item Declarații (antete) de funcții
+		\item Funcții statice
+		\item Funcții inline (de asemenea statice)
+		\item Sfârșit macro de gardă (\texttt{\#endif})
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{De ce nu se include un fișier C?}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item Un fișier C conține funcții și variabile globale care pot fi non-statice
+		\item Dacă acel fișier e inclus de două fișiere diferite care sunt
+link-editate apare conflict de forma \textit{already defined}
+		\item Un fișier header \textbf{nu} trebuie să aibă forma unui fișier C
+			\begin{itemize}
+				\item fără variabile globale non-statice
+				\item fără funcții non-statice
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{\#include "file.h" vs. \#include $<$file.h$>$}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+\begin{frame}{\#include \textless{}file.h\textgreater{} vs. \#include "file.h"}
+	\begin{itemize}
+		\item \texttt{\#include \textless{}file.h\textgreater{}}
+			\begin{itemize}
+				\item system headers
+				\item căutare într-un set de directoare predefinite
+				\item localizate preponderent în \texttt{/usr/include} și
+\texttt{/usr/local/include}
+			\end{itemize}
+		\item \texttt{\#include "file.h"}
+			\begin{itemize}
+				\item local headers
+				\item căutare începând cu directorul local
+			\end{itemize}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Extinderea căii de căutare a fișierelor header}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item \texttt{CPPFLAGS = -I/usr/include/gdk/ -iquote../include}
+		\item Forma \texttt{\#include \textless{}file.h\textgreater{}} caută
+întâi în directoarele marcate cu \texttt{-I} și apoi în cele implicite
+		\item Forma \texttt{\#include "file.h"} caută în directoarele marcate
+cu \texttt{-iquote}, apoi în cele marcate cu \texttt{-I}, apoi în directorul
+local și apoi în cele implicite
+	\end{itemize}
 \end{frame}
 
 \section{Altele}
@@ -214,23 +467,37 @@
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}{Stringification}
-  \begin{itemize}
-    \item bla
-    \item valoarea unei variabile DBG(a)
-  \end{itemize}
+	\begin{itemize}
+		\item Operatorul \texttt{\#} în fața unui argument al unui macro
+		\item Construcția este un șir de caractere reprezentând \textit{numele} argumentului
+	\end{itemize}
+
+	\input{code/string}
 \end{frame}
 
 \begin{frame}{Concatenare}
-  \begin{itemize}
-    \item bla
-  \end{itemize}
+	\begin{itemize}
+		\item Preprocesorul concatenează șirurile adiacente
+			\begin{itemize}
+				\item \texttt{"an" "a" " a" "re"} $\rightarrow$
+\texttt{"ana are"}
+			\end{itemize}
+		\item Operatorul \texttt{\#\#} concatenează doi tokeni într-unul
+singur
+		\item Wanna see something really scary?
+	\end{itemize}
+
+	\input{code/concat}
 \end{frame}
 
 \begin{frame}{Diagnosticare}
-  \begin{itemize}
-    \item bla (\#error)
-    \item bla (\#warning)
-  \end{itemize}
+	\begin{itemize}
+		\item Directiva \texttt{\#error} forțează eroare de preprocesare și
+încheierea acțiunii
+		\item Directiva \texttt{\#warning} permite continuarea procesării
+	\end{itemize}
+
+	\input{code/diag}
 \end{frame}
 
 \section{Resurse utile}
@@ -238,19 +505,19 @@
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}{Link-uri}
-  \begin{itemize}
-    \item \url{http://en.wikipedia.org/wiki/C\_preprocessor}
-    \item \url{http://c-faq.com/cpp/index.html}
-  \end{itemize}
+	\begin{itemize}
+		\item \url{http://en.wikipedia.org/wiki/C\_preprocessor}
+		\item \url{http://c-faq.com/cpp/index.html}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Altele}
-  \begin{itemize}
-    \item man cpp
-    \item info cpp
-    \item comp.lang.c (Usenet)
-    \item \#\#c (IRC, Freenode)
-  \end{itemize}
+	\begin{itemize}
+		\item man cpp
+		\item info cpp
+		\item comp.lang.c (Usenet)
+		\item \#\#c (IRC, Freenode)
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Întrebări}
