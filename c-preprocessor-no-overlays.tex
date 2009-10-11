@@ -42,24 +42,24 @@
 % fie folosind \frametitle
 \begin{frame}{Rolul preprocesorului C}
 	\begin{itemize}		% Just like normal LaTeX
-		\pause \item Includerea fișierelor header
-		\pause \item Expandarea macro-urilor
-		\pause \item Compilare condiționată
-		\pause \item Diagnosticare
+		\item Includerea fișierelor header
+		\item Expandarea macro-urilor
+		\item Compilare condiționată
+		\item Diagnosticare
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Invocarea preprocesorului}
 	\begin{itemize}
-		\pause \item Intern de compilator
+		\item Intern de compilator
 			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 				\large{\texttt{gcc -Wall file.c}}
 			\end{beamerboxesrounded}
-		\pause \item Intern de compilator doar pentru faza preprocesării
+		\item Intern de compilator doar pentru faza preprocesării
 			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 				\large{\texttt{gcc -Wall -E file.c -o file.i}}
 			\end{beamerboxesrounded}
-		\pause \item Cu ajutorul comenzii \texttt{cpp}
+		\item Cu ajutorul comenzii \texttt{cpp}
 			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 				\large{\texttt{cpp file.c file.i}}
 			\end{beamerboxesrounded}
@@ -113,8 +113,8 @@
 
 \begin{frame}{Folosirea parantezelor}
 	\begin{itemize}
-		\pause \item O greșeală frecventă
-		\pause \item Once upon a time during a PSO lab (2006-2007)
+		\item O greșeală frecventă
+		\item Once upon a time during a PSO lab (2006-2007)
 			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 				\texttt{\#define NR\_syscalls     MY\_SYSCALL\_NO+1 \\
 			... \\
@@ -122,46 +122,46 @@
 \hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}malloc(NR\_syscalls * sizeof(void *));
 		}
 			\end{beamerboxesrounded}
-		\pause \item \textbf{Nu} faceți așa
+		\item \textbf{Nu} faceți așa
 			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 				\texttt{\#define MAX(a, b)   (a > b ? a : b)}
 			\end{beamerboxesrounded}
-		\pause \item Faceți așa
+		\item Faceți așa
 			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 				\texttt{\#define MAX(a, b)   ((a) > (b) ? (a) : (b))}
 			\end{beamerboxesrounded}
-		\pause \item E OK tot timpul?
+		\item E OK tot timpul?
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri vs. const}
 	\begin{itemize}
-		\pause \item Avantaje macro-uri
+		\item Avantaje macro-uri
 			\begin{itemize}
-				\pause \item mai rapide (faza de preprocesare)
-				\pause \item interpretate la preprocesare
-				\pause \item nu ocupă spațiu în memorie
+				\item mai rapide (faza de preprocesare)
+				\item interpretate la preprocesare
+				\item nu ocupă spațiu în memorie
 			\end{itemize}
-		\pause \item Avantaje const
+		\item Avantaje const
 			\begin{itemize}
-				\pause \item type safety
-				\pause \item sunt, de fapt, variabile (au o adresă)
-				\pause \item în C++ se pot folosi pentru alocări statice
+				\item type safety
+				\item sunt, de fapt, variabile (au o adresă)
+				\item în C++ se pot folosi pentru alocări statice
 			\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri vs. enum}
 	\begin{itemize}
-		\pause \item Avantaje macro-uri
+		\item Avantaje macro-uri
 			\begin{itemize}
-				\pause \item flexibile (nu sunt limitate la valori întregi)
-				\pause \item nu impun constrângeri de spațiu ocupat
+				\item flexibile (nu sunt limitate la valori întregi)
+				\item nu impun constrângeri de spațiu ocupat
 			\end{itemize}
-		\pause \item Avantaje enum
+		\item Avantaje enum
 			\begin{itemize}
-				\pause \item type safety
-				\pause \item block scope
+				\item type safety
+				\item block scope
 			\end{itemize}
 	\end{itemize}
 \end{frame}
@@ -218,9 +218,9 @@ MY\_MACRO = 40
 	}
 			\end{beamerboxesrounded}
 	\begin{itemize}
-		\pause \item E ceva greșit?
+		\item E ceva greșit?
 	\end{itemize}
-			\pause \begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 \texttt{if (error\_condition) do\_error();}
 			\end{beamerboxesrounded}
 \end{frame}
@@ -234,9 +234,9 @@ MY\_MACRO = 40
 	}
 			\end{beamerboxesrounded}
 	\begin{itemize}
-		\pause \item Inconsistență - nu e nevoie de ; (punct și virgulă) la apel
+		\item Inconsistență - nu e nevoie de ; (punct și virgulă) la apel
 	\end{itemize}
-			\pause \begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+			\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 \texttt{\#define do\_error(msg) do \{ \textbackslash{} \\
 \hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}perror(msg);	\textbackslash{} \\
 \hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}exit(EXIT\_FAILURE); \textbackslash{} \\
@@ -244,27 +244,27 @@ MY\_MACRO = 40
 	}
 			\end{beamerboxesrounded}
 	\begin{itemize}
-		\pause \item Perfect!
+		\item Perfect!
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Macro-uri vs. funcții inline}
 	\begin{itemize}
-		\pause \item Avantaje funcții inline
+		\item Avantaje funcții inline
 			\begin{itemize}
-				\pause \item type safety
-				\pause \item fără bătăi de cap
+				\item type safety
+				\item fără bătăi de cap
 			\end{itemize}
-		\pause \item Avantaje macro-uri
+		\item Avantaje macro-uri
 			\begin{itemize}
-				\pause \item sunt portabile
-				\pause \item unele lucruri se realizează mai greu cu funcții inline
+				\item sunt portabile
+				\item unele lucruri se realizează mai greu cu funcții inline
 	(argumente transmise prin adresă)
-				\pause \item unele lucruri nu se pot face cu funcții inline
+				\item unele lucruri nu se pot face cu funcții inline
 			\end{itemize}
 	\end{itemize}
 
-	\pause \begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 		\texttt{\#define container\_of(ptr, type, member) \textbackslash{} \\
 \hlstd{}\hlstd{\ \ \ \ }\hlstd{}(type *)( (char *)ptr -
 offsetof(type, member)) \\
@@ -287,11 +287,11 @@ offsetof(type, member)) \\
 	\end{beamerboxesrounded}
 
 	\begin{itemize}
-		\pause \item O problemă: apel \texttt{DEBUG("problema");}
-		\pause \item Soluție: token paste operator (\textbf{\#\#}) (extensie GNU)
+		\item O problemă: apel \texttt{DEBUG("problema");}
+		\item Soluție: token paste operator (\textbf{\#\#}) (extensie GNU)
 	\end{itemize}
 
-	\pause \begin{beamerboxesrounded}[lower=block body,shadow=true]{}
+	\begin{beamerboxesrounded}[lower=block body,shadow=true]{}
 \texttt{\#define DEBUG(fmt, ...) \textbackslash{} \\
 \hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}fprintf(stderr, fmt, \#\#\_\_VA\_ARGS\_\_)}
 	\end{beamerboxesrounded}
@@ -299,15 +299,15 @@ offsetof(type, member)) \\
 
 \begin{frame}{Probleme în folosirea macro-urilor}
 	\begin{itemize}
-		\pause \item Precedența operatorilor
+		\item Precedența operatorilor
 			\begin{itemize}
 				\item soluție: folosirea parantezelor
 			\end{itemize}
-		\pause \item Omiterea operatorului ; (punct și virgulă)
+		\item Omiterea operatorului ; (punct și virgulă)
 			\begin{itemize}
 				\item soluție: folosirea \texttt{do \{ ... \} while(0)}
 			\end{itemize}
-		\pause \item Linii multiple
+		\item Linii multiple
 			\begin{itemize}
 				\item soluție: folosirea operatorului \textbackslash{}
 (backslash)
@@ -366,10 +366,10 @@ offsetof(type, member)) \\
 
 \begin{frame}{Combinare cod C și cod C++}
 	\begin{itemize}
-		\pause \item Compilatorul de C++ face ``name mangling''
-		\pause \item Linker-ul nu recunoaște simbolurile
+		\item Compilatorul de C++ face ``name mangling''
+		\item Linker-ul nu recunoaște simbolurile
 	\end{itemize}
-	\pause \input{code/c-cpp}
+	\input{code/c-cpp}
 \end{frame}
 
 \section{Includerea fișierelor header}
@@ -405,19 +405,19 @@ fișier header include alte fișiere header)
 
 \begin{frame}{Ce conține un fișier header?}
 	\begin{itemize}
-		\pause \item Macro de gardă (\texttt{\#ifndef ...})
-		\pause \item Includerea altor fișiere header
+		\item Macro de gardă (\texttt{\#ifndef ...})
+		\item Includerea altor fișiere header
 			\begin{itemize}
 				\item se folosesc tipuri definite în alt header
 				\item se folosesc funcții declarate în alt header (vezi \texttt{Dprintf})
 			\end{itemize}
-		\pause \item Macro-uri
-		\pause \item Structuri de date, enumerări și definiri de tipuri
-		\pause \item Declarații \textbf{externe} de variabile
-		\pause \item Declarații (antete) de funcții
-		\pause \item Definiții de funcții statice
-		\pause \item Definiții de funcții inline (de asemenea statice)
-		\pause \item Sfârșit macro de gardă (\texttt{\#endif})
+		\item Macro-uri
+		\item Structuri de date, enumerări și definiri de tipuri
+		\item Declarații \textbf{externe} de variabile
+		\item Declarații (antete) de funcții
+		\item Definiții de funcții statice
+		\item Definiții de funcții inline (de asemenea statice)
+		\item Sfârșit macro de gardă (\texttt{\#endif})
 	\end{itemize}
 \end{frame}
 
@@ -436,14 +436,14 @@ link-editate apare conflict de forma \textit{already defined}
 
 \begin{frame}{\#include \textless{}file.h\textgreater{} vs. \#include "file.h"}
 	\begin{itemize}
-		\pause \item \texttt{\#include \textless{}file.h\textgreater{}}
+		\item \texttt{\#include \textless{}file.h\textgreater{}}
 			\begin{itemize}
 				\item system headers
 				\item căutare într-un set de directoare predefinite
 				\item localizate preponderent în \texttt{/usr/include} și
 \texttt{/usr/local/include}
 			\end{itemize}
-		\pause \item \texttt{\#include "file.h"}
+		\item \texttt{\#include "file.h"}
 			\begin{itemize}
 				\item local headers
 				\item căutare începând cu directorul local
@@ -468,37 +468,37 @@ local și apoi în cele implicite
 
 \begin{frame}{Stringification}
 	\begin{itemize}
-		\pause \item Operatorul \texttt{\#} în fața unui argument al unui macro
-		\pause \item Construcția este un șir de caractere reprezentând \textit{numele} argumentului
+		\item Operatorul \texttt{\#} în fața unui argument al unui macro
+		\item Construcția este un șir de caractere reprezentând \textit{numele} argumentului
 	\end{itemize}
 
-	\pause \input{code/string}
+	\input{code/string}
 \end{frame}
 
 \begin{frame}{Concatenare}
 	\begin{itemize}
-		\pause \item Compilatorul concatenează șirurile adiacente
+		\item Compilatorul concatenează șirurile adiacente
 (\textit{string literal concatenation})
 			\begin{itemize}
 				\item \texttt{"an" "a" " a" "re"} $\rightarrow$
 \texttt{"ana are"}
 			\end{itemize}
-		\pause \item Operatorul \texttt{\#\#} concatenează doi tokeni într-unul
+		\item Operatorul \texttt{\#\#} concatenează doi tokeni într-unul
 singur
-		\pause \item Wanna see something really scary?
+		\item Wanna see something really scary?
 	\end{itemize}
 
-	\pause \input{code/concat}
+	\input{code/concat}
 \end{frame}
 
 \begin{frame}{Diagnosticare}
 	\begin{itemize}
-		\pause \item Directiva \texttt{\#error} forțează eroare de preprocesare și
+		\item Directiva \texttt{\#error} forțează eroare de preprocesare și
 încheierea acțiunii
-		\pause \item Directiva \texttt{\#warning} permite continuarea procesării
+		\item Directiva \texttt{\#warning} permite continuarea procesării
 	\end{itemize}
 
-	\pause \input{code/diag}
+	\input{code/diag}
 \end{frame}
 
 \section{Resurse utile}

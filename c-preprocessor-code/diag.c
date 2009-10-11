@@ -7,7 +7,7 @@ int main(void)
 #endif
 
 #if defined __linux__ && ! defined DEBUG__
-#error "DEBUG__ macro must be defined on Linux"
+#error "DEBUG__ marco must be defined on Linux"
 #endif
 
 	printf("Hello, World!\n");

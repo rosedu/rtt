@@ -1,4 +1,4 @@
-BASENAME = c-preprocessor
+BASENAME = c-preprocessor-no-overlays
 HIGHLIGHT = code
 PDF = $(addsuffix .pdf, $(BASENAME))
 TEX = $(addsuffix .tex, $(BASENAME))
