@@ -1,0 +1,267 @@
+% vim: set tw=78 aw:
+\documentclass{beamer}
+
+\usepackage[utf8x]{inputenc} % diacritice
+\usepackage[romanian]{babel}
+\usepackage{hyperref}        % folositi \url{http://...}
+% sau \href{http://...}{Nume Link}
+\mode<presentation>
+{ \usetheme{Rochester} }		% TODO: settle this
+
+% Titlul nu foloseşte Unicode pentru că e o problemă căreia nu i-am dat de
+% cap.
+\title[Secure Shell]{Secure Shell}
+\subtitle{RTT - Cursul 2}
+\institute{ROSEdu}
+\author{Răzvan Deaconescu, Lucian Cojocar}
+
+\begin{document}
+
+% Slide-urile cu mai multe părţi sunt marcate cu textul (cont.)
+\setbeamertemplate{frametitle continuation}[from second]
+% Arătăm numărul frame-ului
+\setbeamertemplate{footline}[frame number]
+
+\frame{\titlepage}
+
+\frame{\tableofcontents}
+
+% NB: Secţiunile nu sunt marcate vizual, ci doar apar în cuprins.
+\section{No\c{t}iuni generale}
+
+% Pentru reamintirea periodică a cuprinsului şi unde ne aflăm:
+\frame{\tableofcontents[currentsection]}
+
+% Titlul unui frame se specifică fie în acolade, imediat după \begin{frame},
+% fie folosind \frametitle
+\begin{frame}{SSH}
+  \begin{itemize}
+    \item \textbf{protocol} de rețea (nivel aplicație)
+    \item canal securizat de comunicație
+    \item comandă de la distanță, transfer de fișiere, tunelare
+    \item client (ssh), server (sshd, portul 22)
+    \item servere pe Unix-uri, Mac OS X, Windows (cygwin)
+    \item \href{http://www.openssh.com/}{OpenSSH} este practic singura
+implementare de SSH
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Criptare}
+  \begin{itemize}
+    \item două tipuri
+      \begin{itemize}
+        \item chei simetrice - rapidă
+        \item chei asimetrice - lentă dar potențial mai sigură
+      \end{itemize}
+    \item algoritmi de criptare
+       \begin{itemize}
+         \item alg(mesaj) $\rightarrow$ mesaj\_criptat
+         \item AES (Advanced Encryption Standard), Blowfish
+         \item RSA (Rivest, Shamir, Adleman) , DSA (Digital Signature Algorithm)
+       \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Chei publice/private}
+  \begin{itemize}
+    \item legătură matematică (ex: RSA se bazează pe teorema lui Euller)
+    \item generate în același timp
+    \item pub(priv(M)) = M (semnătură digitală)
+    \item priv(pub(M)) = M (criptare)
+    \item autentificare (certificate)
+    \item criptare folosită în conjuncție cu chei simetrice
+  \end{itemize}
+\end{frame}
+
+\section{Comenzi de bază}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Fişiere utilizate (client)}
+	\begin{itemize}
+		\item ~/.ssh/id\_rsa cheia privată implicită
+		\item ~/.ssh/id\_rsa cheia publică implicită
+		\item ~/.ssh/config 
+		\item ~/.ssh/authorized\_keys chei publice pentru care nu se mai cere
+			parola
+		\item ~/.ssh/known\_hosts chei publice ale serverlor la care ne-am
+			conectat
+		\item ~/.shosts autentificare în funcție de host
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Fişiere utilizate (server)}
+	\begin{itemize}
+		\item /etc/ssh/ssh\_host\_rsa\_key cheia privată a serverului
+		\item /etc/ssh/ssh\_host\_rsa\_key.pub cheia publică a serverului
+		\item /etc/ssh/ssh\_config
+		\item /etc/ssh/ssh/rc	comenzi executate la conectare
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Conectare la distanță}
+  \begin{itemize}
+    \item ssh ana@rosedu.org
+    \item ssh -l bogdan rosedu.org
+    \item ssh -p 2222 -l corina rosedu.org
+    \item ssh -l dan rosedu.org "ls \~{}/projects"
+    \item ssh -i .ssh/servers.priv -l root rosedu.org
+    \item man ssh
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Copiere la/de la distanță}
+  \begin{itemize}
+    \item scp file.txt elena@rosedu.org:
+    \item scp file.txt florin@rosedu.org:projects/elena/tmp/
+    \item scp -P 2222 file.txt gabi@rosedu.org:
+    \item scp horia@rosedu.org:test.txt .
+    \item scp -r horia@rosedu.org:docs/ \~{}/stuff/
+    \item man scp
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Generare pereche de chei}
+  \begin{itemize}
+    \item ssh-keygen -t rsa
+    \item ssh-keygen -t dsa -N My$|$P422)(
+    \item implicit \{\~{}/.ssh/id\_dsa, \~{}/.ssh/id\_dsa.pub\}
+    \item ssh-keygen -t rsa -f my\_key
+    \item \{my\_key, my\_key.pub\}
+	\item ssh-keygen -H
+    \item man ssh-keygen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Autentificare folosind chei publice}
+  \begin{itemize}
+        \item scp \~{}/.ssh/id\_rsa.pub irina@rosedu.org
+        \item cat id\_rsa.pub $>>$ \~{}/.ssh/authorized\_keys
+	\end{itemize}
+	\pause \begin{itemize}
+        \item ssh -l irina rosedu.org
+    	\item cat \~{}/.ssh/id\_rsa.pub $|$ ssh irina@rosedu.org "cat
+$>>$ \~{}/.ssh/authorized\_keys"
+	\end{itemize}
+	\pause \begin{itemize}
+		\item ssh-copy-id -i ~/.ssh/id\_rsa.pub irina@rosedu.org
+  \end{itemize}
+\end{frame}
+
+\section{No\c{t}iuni avansate}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Instalare și interacțiune server SSH}
+  \begin{itemize}
+  	\item emerge openssh
+    \item apt-get install openssh-server
+    \item /etc/init.d/ssh \{stop, start, restart, \pause reload\}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Configurări de bază server SSH}
+  \begin{itemize}
+    \item /etc/ssh/sshd\_config
+    \item Port 22
+    \item PasswordAuthentication no
+    \item X11Forwarding yes
+	\item GatewayPorts yes
+    \item man sshd\_config
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Folosire ssh-agent}
+  \begin{itemize}
+    \item mai multe perechi de chei $\rightarrow$ folosire opțiune -i la ssh/scp
+    \item chei cu passphrase $\rightarrow$ introducerea passphrase-ului la fiecare conectare
+    \item booooring (lene, pierdere de timp, rutină)
+	\item ssh-agent bash
+    \item ssh-add    ; se adaugă cheia implicită
+    \item ssh-add \~{}/.ssh/my\_key    ; se adaugă cheia specificată
+    \item la autentificare nu se mai cere passphrase; nu mai e nevoie de -i
+    \item pornit automat cu interfața grafică
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{TCP Port Forwarding}
+  \begin{itemize}
+    \item ssh -L localhost:8080:rosedu.org:80 rtt@rosedu.org
+      \begin{itemize}
+        \item conexiune pe localhost:8080 sunt dirijate către
+rosedu.org:80
+      \end{itemize}
+    \item ssh -R rosedu.org:8022:localhost:22 rtt@rosedu.org 
+       \begin{itemize}
+         \item conexiunile ajung la sistemul care a inițiat reverse port
+		 forward
+       \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{SOCKS proxy}
+  \begin{itemize}
+  	\item ssh -D 8080 rtt@rosedu.org
+	\item asigură un canal criptat până la server
+	\item proxy anonim
+	\item tunel local, dinamic
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{X-Forwarding cu SSH}
+  \begin{itemize}
+    \item X11Fowarding on ; /etc/ssh/sshd\_config
+    \item ssh -X -l lucian rosedu.org
+    \item xeyes, firefox, gvim etc.
+    \item rulare la distanță, afișare locală
+  \end{itemize}
+\end{frame}
+
+\section{Utilizare SSH \^{i}n alte aplicații}
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{SCM}
+  \begin{itemize}
+    \item git clone ssh://rosedu.org/projects/repo.git/
+    \item svn checkout svn+ssh//rosedu.org/projects/repo.svn/
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{rsync}
+  \begin{itemize}
+    \item rsync -avz -e ssh monica@rosedu.org:/home/cdl/projects
+\~{}/rsync/
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{SSHFS}
+	\begin{itemize}
+	\item sistem de fişiere peste ssh
+	\item implementat cu FUSE (Filesystem in Userspace)
+	\end{itemize}
+\end{frame}
+
+\section{Exemple}
+\frame{\tableofcontents[currentsection]}
+\begin{frame}{Exemple}
+	\begin{itemize}
+	\item tunel invers creat deja de pe o sație din regie (sper să fi ținut) 
+	\item ssh -Nn -R rosedu.org:29000:localhost:22 rtt@rosedu.org
+	\item GatewayPorts
+	\item tunel direct, tunel invers (între rosedu.org, şi calculatorul de
+	acasă)
+	\item proxy socks5	(tsock wget whatismyip.org)
+	\item montare sistem de fişiere (sshfs)
+	\item lansare aplicație X
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Bibliografie}
+  \begin{itemize}
+    \item SSH: The Secure Shell (The Definitive Guide), O'Reilly 2005 (2nd
+Edition)
+    \item \url{http://www.linuxjournal.com/article/4412}
+    \item \url{http://suso.org/docs/shell/ssh.sdf}
+edition)
+  \end{itemize}
+\end{frame}
+
+\end{document}
