@@ -79,8 +79,8 @@ implementare de SSH
 \begin{frame}{Fişiere utilizate (client)}
 	\begin{itemize}
 		\item ~/.ssh/id\_rsa cheia privată implicită
-		\item ~/.ssh/id\_rsa cheia publică implicită
-		\item ~/.ssh/config 
+		\item ~/.ssh/id\_rsa.pub cheia publică implicită
+		\item /etc/ssh/ssh\_config ~/.ssh/config 
 		\item ~/.ssh/authorized\_keys chei publice pentru care nu se mai cere
 			parola
 		\item ~/.ssh/known\_hosts chei publice ale serverlor la care ne-am
@@ -93,7 +93,7 @@ implementare de SSH
 	\begin{itemize}
 		\item /etc/ssh/ssh\_host\_rsa\_key cheia privată a serverului
 		\item /etc/ssh/ssh\_host\_rsa\_key.pub cheia publică a serverului
-		\item /etc/ssh/ssh\_config
+		\item /etc/ssh/sshd\_config
 		\item /etc/ssh/ssh\_rc	comenzi executate la conectare
 	\end{itemize}
 \end{frame}
@@ -138,7 +138,6 @@ implementare de SSH
         \item cat id\_rsa.pub $>>$ \~{}/.ssh/authorized\_keys
 	\end{itemize}
 	\pause \begin{itemize}
-        \item ssh -l irina rosedu.org
     	\item cat \~{}/.ssh/id\_rsa.pub $|$ ssh irina@rosedu.org "cat
 $>>$ \~{}/.ssh/authorized\_keys"
 	\end{itemize}
