@@ -1,20 +1,8 @@
 #! /usr/bin/env stap
-
-# Copyright (C) 2006 IBM Corp.
-#
-# This file is part of systemtap, and is free software.  You can
-# redistribute it and/or modify it under the terms of the GNU General
-# Public License (GPL); either version 2, or (at your option) any
-# later version.
-
-#
-# Print the system call count by process name in descending order.
-#
-
+# deja mai mult decât tema la PSO
 global syscalls
-
 probe begin {
-  print ("Collecting data... Type Ctrl-C to exit and display results\n")
+  print ("Collecting data... Ctrl-C to exit\n")
 }
 
 probe syscall.* {
@@ -22,7 +10,7 @@ probe syscall.* {
 }
 
 probe end {
-  printf ("%-10s %-s\n", "#SysCalls", "Process Name")
+  printf ("%-10s %-s\n", "#SysCalls", "Procname")
   foreach (proc in syscalls-)
     printf("%-10d %-s\n", syscalls[proc], proc)
 }

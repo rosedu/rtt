@@ -140,10 +140,44 @@
   \small \input{code/strace}
 \end{frame}
 
-\begin{frame}{system-wide \texttt{strace}}
-  \small \input{code/strace}
+\begin{frame}{nr apeluri de sistem/pid}
+  \small \input{code/syscalls_by_pid}
 \end{frame}
 
+\begin{frame}{nr apeluri de sistem/proces}
+  \small \input{code/syscalls_by_proc}
+\end{frame}
+
+\section{Explicații}
+\begin{frame}{Cum funcționează \systemtap?}
+  \begin{itemize}
+  \item traduce scripturile în C (CPL)
+  \item compilează din ele un modul de kernel (CPL)
+  \item introduce modulul în kernel (PSO)
+  \end {itemize}
+\end{frame}
+
+    
+\section{Explicații}
+\begin{frame}{Cum funcționează \systemtap?}
+  \begin{itemize}
+  \item la introducerea modulului: \\ \small activează evenimentele
+    monitorizate (punctele de colectare a evenimentelor trebuie să fie
+    deja definite)
+  \item la declanșarea unui eveniment monitorizat: \\ \small se
+    execută rutinele specificate pentru evenimentul monitorizat
+  \item la oprirea programului \texttt{stap}: \\ \small dezactivează
+    evenimentele și se descarcă modulul
+  \end {itemize}
+\end{frame}
+
+\section{User space/kernel space}
+
+\begin{frame}{Cui îi pasă de kernel, vrem să inspectăm temele}
+  \begin{itemize}
+    \item 
+  \end{itemize}
+\end{frame}
 
 
 \begin{frame}{Î \& R}

@@ -1,5 +1,4 @@
 #!/usr/bin/env stap
-global syscall
 probe syscall.open
 {
   printf("%s(%d) open (%s)\n",
