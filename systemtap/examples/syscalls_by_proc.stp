@@ -1,0 +1,16 @@
+#! /usr/bin/env stap
+# deja mai mult decât tema la PSO
+global syscalls
+probe begin {
+  print ("Collecting data... Ctrl-C to exit\n")
+}
+
+probe syscall.* {
+  syscalls[execname()]++
+}
+
+probe end {
+  printf ("%-10s %-s\n", "#SysCalls", "Procname")
+  foreach (proc in syscalls-)
+    printf("%-10d %-s\n", syscalls[proc], proc)
+}

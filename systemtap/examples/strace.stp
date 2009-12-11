@@ -1,0 +1,11 @@
+#!/usr/bin/env stap
+probe syscall.open
+{
+  printf("%s(%d) open (%s)\n",
+     execname(), pid(), argstr)
+}
+
+probe timer.ms(4000)
+{
+  exit()
+}
