@@ -1,0 +1,2 @@
+LDLIBS = -pthread
+CFLAGS = -g
