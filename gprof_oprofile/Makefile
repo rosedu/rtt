@@ -10,8 +10,7 @@ CLEAN_FILES = $(addprefix $(BASENAME), $(EXTRA_EXTENSIONS))
 
 all: $(PDF)
 
-$(PDF): $(TEX) $(HIGHLIGHT)/Makefile oprofile.pdf gprof.pdf
-	#make -C $(HIGHLIGHT)
+$(PDF): $(TEX) oprofile.pdf gprof.pdf
 	$(PDFLATEX) $<
 	$(PDFLATEX) $<	# Twice, so TOC is also updated
 
@@ -21,5 +20,5 @@ gprof.pdf: gprof.eps
 	epstopdf $<
 
 clean:
-	-make -C $(HIGHLIGHT) clean
 	-rm -f $(CLEAN_FILES) *~
+	-rm -f *.pdf
