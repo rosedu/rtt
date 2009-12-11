@@ -18,6 +18,8 @@
 \institute{ROSEdu}
 \author{Lucian Adrian Grijincu \\ \texttt{lucian.grijincu@rosedu.org}}
 
+
+\newcommand{\systemtap}{$\texttt{systemtap}$ } 
 \begin{document}
 
 % Slide-urile cu mai multe părţi sunt marcate cu textul (cont.)
@@ -36,38 +38,38 @@
 \frame{\tableofcontents[currentsection]}
 
 
-\begin{frame}{Cum lucrăm fără systemtap?}
+\begin{frame}{Cum lucrăm fără \systemtap?}
   \begin{beamerboxesrounded}[lower=block body,shadow=true]{un program cu bug-uri (câte ați găsit?)}
     \small \input{code/printf-debugging-without}
   \end{beamerboxesrounded}
 \end{frame}
 
 
-\begin{frame}{Cum lucrăm fără systemtap?}
+\begin{frame}{Cum lucrăm fără \systemtap?}
   \begin{beamerboxesrounded}[lower=block body,shadow=true]{băgăm niște printfuri}
     \small \input{code/printf-debugging-with-1}
   \end{beamerboxesrounded}
 \end{frame}
 
-\begin{frame}{Cum lucrăm fără systemtap?}
+\begin{frame}{Cum lucrăm fără \systemtap?}
   \begin{beamerboxesrounded}[lower=block body,shadow=true]{corectăm și mai băgăm niște printfuri}
     \small \input{code/printf-debugging-with-2}
   \end{beamerboxesrounded}
 \end{frame}
 
-\begin{frame}{Cum lucrăm fără systemtap?}
+\begin{frame}{Cum lucrăm fără \systemtap?}
   \begin{beamerboxesrounded}[lower=block body,shadow=true]{și tot așa ...}
     \small \input{code/printf-debugging-with-3}
   \end{beamerboxesrounded}
 \end{frame}
 
-\begin{frame}{Cum lucrăm fără systemtap?}
+\begin{frame}{Cum lucrăm fără \systemtap?}
   \begin{beamerboxesrounded}[lower=block body,shadow=true]{la final, curățăm programul}
     \small \input{code/printf-debugging-done}
   \end{beamerboxesrounded}
 \end{frame}
 
-\begin{frame}{Cum lucrăm fără systemtap?}
+\begin{frame}{Cum lucrăm fără \systemtap?}
   \begin{itemize}
     \item repetitiv
     \item pentru fiecare \texttt{printf} trebuie recompilat proiectul
@@ -81,7 +83,7 @@
 \end{frame}
 
 
-\begin{frame}{Cu ce ajută systemtap?}
+\begin{frame}{Cu ce ajută \systemtap?}
   \begin{itemize}
     \item permite \textit{administratorilor} și
       \textit{programatorilor} să scrie scripturi simple cu care să
@@ -95,6 +97,40 @@
     \item totul în siguranță, fără a introduce probleme noi
     \item \small există și posibilitatea modificării rezultatelor
   \end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+\section{Instalare (Ubuntu)}
+
+\begin{frame}{Instalare (Ubuntu)}
+  \begin{itemize}
+    \item \systemtap are nevoie de:
+      \begin{itemize} 
+      \item suport în kernel
+        \begin{beamerboxesrounded}[lower=block body,shadow=true]
+          \small \input {code/install--make-menuconfig}
+        \end{beamerboxesrounded}
+      \item simboluri de debugging
+      \end{itemize}
+    \item în Ubuntu, suportul este compilat în kernel
+    \item simbolurile de debugging pot fi descărcate
+      \begin{itemize}
+      \item http://ddebs.ubuntu.com karmic main
+      \item wget http://ddebs.ubuntu.com/pool/main/l/linux/linux-image-debug-2.6.31-16-generic\_2.6.31-16.53\_i386.ddeb
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Testarea instalării}
+  \input {code/install--test-script}
 \end{frame}
 
 

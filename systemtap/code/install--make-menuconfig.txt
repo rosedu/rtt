@@ -1,0 +1,5 @@
+Kernel hacking  --->
+    [*] Kernel debugging
+        [*]   Compile the kernel with debug info
+Instrumentation Support  --->
+    [*] Kprobes (EXPERIMENTAL)
