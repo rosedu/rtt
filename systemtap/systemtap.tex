@@ -29,19 +29,73 @@
 
 \frame{\tableofcontents}
 
-\begin{frame}{... să nu așteptăm mai târziu}
-  \begin{beamerboxesrounded}[lower=block body,shadow=true]{}
-    \large {\texttt{\textit{sudo apt-get install} devscripts wget cdbs \\
-      build-essential fakeroot patchutils debhelper}}
+% NB: Secţiunile nu sunt marcate vizual, ci doar apar în cuprins.
+\section{Ce e systemtap?}
+
+% Pentru reamintirea periodică a cuprinsului şi unde ne aflăm:
+\frame{\tableofcontents[currentsection]}
+
+
+\begin{frame}{Cum lucrăm fără systemtap?}
+  \begin{beamerboxesrounded}[lower=block body,shadow=true]{un program cu bug-uri (câte ați găsit?)}
+    \small \input{code/printf-debugging-without}
   \end{beamerboxesrounded}
 \end{frame}
 
 
-% NB: Secţiunile nu sunt marcate vizual, ci doar apar în cuprins.
-\section{Notiuni introductive}
+\begin{frame}{Cum lucrăm fără systemtap?}
+  \begin{beamerboxesrounded}[lower=block body,shadow=true]{băgăm niște printfuri}
+    \small \input{code/printf-debugging-with-1}
+  \end{beamerboxesrounded}
+\end{frame}
 
-% Pentru reamintirea periodică a cuprinsului şi unde ne aflăm:
-\frame{\tableofcontents[currentsection]}
+\begin{frame}{Cum lucrăm fără systemtap?}
+  \begin{beamerboxesrounded}[lower=block body,shadow=true]{corectăm și mai băgăm niște printfuri}
+    \small \input{code/printf-debugging-with-2}
+  \end{beamerboxesrounded}
+\end{frame}
+
+\begin{frame}{Cum lucrăm fără systemtap?}
+  \begin{beamerboxesrounded}[lower=block body,shadow=true]{și tot așa ...}
+    \small \input{code/printf-debugging-with-3}
+  \end{beamerboxesrounded}
+\end{frame}
+
+\begin{frame}{Cum lucrăm fără systemtap?}
+  \begin{beamerboxesrounded}[lower=block body,shadow=true]{la final, curățăm programul}
+    \small \input{code/printf-debugging-done}
+  \end{beamerboxesrounded}
+\end{frame}
+
+\begin{frame}{Cum lucrăm fără systemtap?}
+  \begin{itemize}
+    \item repetitiv
+    \item pentru fiecare \texttt{printf} trebuie recompilat proiectul
+      (timpii de compilare pot fi foarte mari)
+    \item poate introduce alte probleme
+    \item nu prea este la îndemâna administratorilor de sistem
+    \item după ce se rezolva problema, sunt șterse, și dacă apare mai
+      târziu o problemă în același loc, sunt rescrise
+    \item ...
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Cu ce ajută systemtap?}
+  \begin{itemize}
+    \item permite \textit{administratorilor} și
+      \textit{programatorilor} să scrie scripturi simple cu care să
+      monitorizeze activitatea internă a kernelului sau a aplicațiilor
+    \item datele pot fi
+      \begin{itemize}
+      \item extrase
+      \item filtrate
+      \item sumarizate
+      \end{itemize}
+    \item totul în siguranță, fără a introduce probleme noi
+    \item \small există și posibilitatea modificării rezultatelor
+  \end{itemize}
+\end{frame}
 
 
 % Titlul unui frame se specifică fie în acolade, imediat după \begin{frame},
