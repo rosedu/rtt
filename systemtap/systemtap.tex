@@ -158,7 +158,6 @@
 \end{frame}
 
     
-\section{Explicații}
 \begin{frame}{Cum funcționează \systemtap?}
   \begin{itemize}
   \item la introducerea modulului: \\ \small activează evenimentele
@@ -173,9 +172,21 @@
 
 \section{User space/kernel space}
 
-\begin{frame}{Cui îi pasă de kernel, vrem să inspectăm temele}
+\begin{frame}{Cui îi pasă de kernel, vrem să inspectăm temele scrise în C}
   \begin{itemize}
-    \item 
+    \item se definesc probele ce se inspectează:
+    \item \input {code/userspace-probe}
+    \item din fișierul cu probele se obțin un fișier antet și un
+      fișier obiect cu tot ce e nevoie pentru a folosi noile probe
+    \item \input {code/userspace-makefile}
+  \item nu e nevoie să modificați codul sursă (în afara unui \\ \#include ``probes.h'')
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Cui îi pasă de C, vrem să inspectăm temele scrise în Python}
+  \begin{itemize}
+    \item recent s-a introdus suport pentru inspectarea codului Python
+    \item expect it soon in a distro release near you
   \end{itemize}
 \end{frame}
 
@@ -186,5 +197,9 @@
   \end{centering}
 \end{frame}
 
+\section{Moar demos!}
+\begin{frame}
+Toate exemplele sunt furate de pe pagina proiectului: http://sourceware.org/systemtap/examples/index.html
+\end{frame}
 
 \end{document}

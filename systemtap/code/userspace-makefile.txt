@@ -1,0 +1,4 @@
+probes.h: probes.d
+        dtrace -C -h -s $< -o $@
+probes.o: probes.d
+        dtrace -C -G -s $< -o $@

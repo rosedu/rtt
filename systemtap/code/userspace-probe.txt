@@ -1,0 +1,4 @@
+provider myprogram {
+         probe func1();
+         probe func2(int);
+}

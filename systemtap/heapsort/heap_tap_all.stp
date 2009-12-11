@@ -1,3 +1,0 @@
-probe heapsort* {
-      printf("%s\n", probestr);
-}
