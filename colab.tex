@@ -75,7 +75,7 @@
 
 \begin{frame}{Computer Supported Cooperative Work}
   \begin{figure}
-    \includegraphics[scale=0.3]{img/cscw-matrix}
+    \includegraphics[scale=0.25]{img/cscw-matrix}
   \end{figure}
 \end{frame}
 
@@ -198,7 +198,7 @@
     \item \texttt{http://www.dokuwiki.org/}
     \item file-based (nu necesită baze de date)
     \item PHP
-    \item versiune stabilă o dată la 
+    \item versiune stabilă o dată la 7--10 luni
     \item plugin-uri
     \item access control list
     \item util pentru organizații și companii mici
@@ -213,9 +213,8 @@
     \item indexarea namespace-urilor (afișarea conținutului)
     \item ușor personalizabil (template-uri, appearance)
     \item peste 750 de pluginuri
-    \item gestiunea grupurilor
+    \item acl: gestiunea grupurilor, drepturilor de acces
     \item interfață simplă și ușor de folosit
-    \item interfață de administrare facilă
     \item geek mode on: fișierele sunt păstrate ``plain text'' $\rightarrow$ pot
     fi editate cu Vi :-P
     \item feeds/autentificare/comunitate/open-source
@@ -360,10 +359,12 @@
       \begin{itemize}
         \item creare (pe server) \texttt{git init --bare}
         \item populare repository (pe client)
-          \item \texttt{git init .}
-          \item \texttt{git add . \&\& git commit -m 'initial commit'}
-          \item \texttt{git remote add origin URL}
-          \item \texttt{git push origin master}
+          \begin{itemize}
+            \item \texttt{git init .}
+            \item \texttt{git add . \&\& git commit -m 'initial commit'}
+            \item \texttt{git remote add origin URL}
+            \item \texttt{git push origin master}
+          \end{itemize}
         \item utilizare (pe client) (ca mai sus)
       \end{itemize}
   \end{itemize}
@@ -378,8 +379,6 @@
     \item faceți commit-uri mici (do one thing)
     \item folosiți Git pentru repository-uri locale
     \item folosiți aplicații asociate: gitk, git-gui, tig, gitweb, gitolite
-    \item documentați-vă constant; sunt feature-uri care vă pot fi util dar pe
-    care nu le cunoașteți
     \item folosiți timpul prezent în commit-uri
     \item folosiți branch-uri
     \item folosiți \texttt{.gitignore} pentru a selecta fișierele dorite
