@@ -1,4 +1,4 @@
-BASENAME = cli-eficient
+BASENAME = colab
 PDF = $(addsuffix .pdf, $(BASENAME))
 TEX = $(addsuffix .tex, $(BASENAME))
 PDFLATEX = pdflatex
